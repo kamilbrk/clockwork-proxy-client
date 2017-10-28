@@ -11,6 +11,8 @@ angular.module('clockworkproxy')
       Register: function(Crypto, Keys, ClockworkProxy) {
         // Check if the app has registered
         if (!Keys.isRegistered()) {
+          console.log('Not registered, registering.');
+
           // 1. Set the public key of our server
           var serverPublicKey = Crypto.getKeyFromPEM((
             '-----BEGIN PUBLIC KEY-----' + 
@@ -32,6 +34,8 @@ angular.module('clockworkproxy')
 
           // 4. Send the Registration message
           return ClockworkProxy.register(myKeyPair.pubKeyObj);
+        } else {
+          console.log('Already Registered!');
         }
       }
     }
