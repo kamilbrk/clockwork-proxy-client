@@ -1,19 +1,31 @@
 angular.module('clockworkproxy')
 .service('Keys', function (store) {
 
-  this.setPrivateKey = function (privateKey) {
-    store.set('private-key', privateKey);
+  this.setServerPublicKey = function(publicKey) {
+    store.set('server-public-key', publicKey);
   };
 
-  this.getPrivateKey = function () {
-    return store.get('private-key');
+  this.getServerPublicKey = function() {
+    return store.get('server-public-key');
   };
 
-  this.setPublicKey = function (publicKey) {
-    store.set('public-key');
+  this.setMyPrivateKey = function (privateKey) {
+    store.set('my-private-key', privateKey);
   };
 
-  this.getPublicKey = function () {
-    return store.get('private-key');
+  this.getMyPrivateKey = function () {
+    return store.get('my-private-key');
   };
+
+  this.setMyPublicKey = function (publicKey) {
+    store.set('my-public-key');
+  };
+
+  this.getMyPublicKey = function () {
+    return store.get('my-private-key');
+  };
+
+  this.isRegistered = function() {
+    return this.getServerPublicKey() && this.getMyPrivateKey() && this.getMyPublicKey();
+  }
 });
