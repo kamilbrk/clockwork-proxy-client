@@ -36,6 +36,8 @@ angular.module('clockworkproxy')
           return ClockworkProxy.register(myKeyPair.pubKeyObj);
         } else {
           console.log('Already Registered!');
+          // var myPublicKey = Keys.getMyPublicKey();
+          // console.log(myPublicKey.encrypt('another message here'));
         }
       }
     }

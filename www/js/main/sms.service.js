@@ -24,7 +24,6 @@ angular.module('clockworkproxy')
   };
 
   this.list = function () {
-    console.log('LIST');
     var deferred = $q.defer();
     var filter = {
       box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
@@ -42,11 +41,17 @@ angular.module('clockworkproxy')
 
     if (!window.cordova) {
       deferred.resolve([
-        { body: '0382d86009ce954cc640f89e202d16023156715dd3f53837ae002a922d18ebe2b7bc454533658ac8a460aad914170acff80f34fb2eaa6a901b722f777acb28511b7c91f6dff5' },
-        { body: '18b69977913bcd492f96e4f614757f4aa575a9c61a39e5cdbb4ddff65ff10214ba241174ceef1474e4f6185a79d8dde960539d9f5b3007b663ff0e' },
+        { body: "b108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+        { body: "a0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+        { body: "a108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+        { body: "x015631ee2eb436fd8ccea3cbcf887d0c27ef83d2deafdf8a880f366b381a9edaea5919772929a04024117b0c546d9ab856675d5dace80c82abb8a787761224ab970347bf35a" },
 
-        { body: '0382d86009ce954cc640f89e202d16023156715dd3f53837ae002a922d18ebe2b7bc454533658ac8a460aad914170acff80f34fb2eaa6a901b722f777acb28511b7c91f6dff5' },
-        { body: '18b69977913bcd492f96e4f614757f4aa575a9c61a39e5cdbb4ddff65ff10214ba241174ceef1474e4f6185a79d8dde960539d9f5b3007b663ff0e' }
+        { body: "b0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+
+        { body: "c0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+        { body: "c108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+
+        { body: "x1fc35521ba8a03d9e1f80049d89cb5ad4b36bcd37966ba2d01adf07398df8cc612010c4375268498b1bcef1e10031ab7b77145e8bef1d0d0fd86c8e" }
       ]);
     } else {
       SMS.listSMS(filter, deferred.resolve, deferred.reject);
