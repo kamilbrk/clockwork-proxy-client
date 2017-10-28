@@ -7,5 +7,13 @@
     "gulp-clean-css": "^3.7.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+    "cordova-sms-plugin": "^0.1.11"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-sms-plugin": {}
+    }
   }
 }
