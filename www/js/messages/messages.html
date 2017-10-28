@@ -1,0 +1,13 @@
+<ion-view view-title="Messages">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="message in $ctrl.messages">
+        <ion-avatar item-start>
+          <ion-icon name="contact"></ion-icon>
+        </ion-avatar>
+        <h2 ng-bind="message.author"></h2>
+        <p ng-bind="message.body"></p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

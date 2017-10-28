@@ -6,40 +6,47 @@ angular.module('clockworkproxy')
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'js/app.html',
     controller: 'AppCtrl'
   })
 
-  .state('app.register', {
-    url: '/register',
+  .state('app.messages', {
+    url: '/messages',
     views: {
-      'menuContent': {
-        templateUrl: 'js/register/register.html',
-        controller: 'RegisterCtrl as $ctrl'
+      'main': {
+        templateUrl: 'js/messages/messages.html',
+        controller: 'MessagesCtrl as $ctrl'
+      }
+    },
+    resolve: {
+      messages: function () {
+        return [];
       }
     }
   })
-
-
-  .state('app.playlists', {
-    url: '/playlists',
+  .state('app.messages.detail', {
+    url: '/:id',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/playlists.html',
-        // controller: 'PlaylistsCtrl'
+      'main': {
+        templateUrl: 'js/messages/detail/detail.html',
+        controller: 'DetailCtrl as $ctrl'
+      }
+    },
+    resolve: {
+      message: function (messages, $stateParams) {
+        return messages.find(function (x) { return x.id === $stateParams.id; });
       }
     }
   })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.create', {
+    url: '/create',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        // controller: 'PlaylistCtrl'
+      'main': {
+        templateUrl: 'js/messages/create/create.html',
+        controller: 'CreateCtrl as $ctrl'
       }
     }
   });
 
-  $urlRouterProvider.otherwise('/app/register');
+  $urlRouterProvider.otherwise('/app/messages');
 });
