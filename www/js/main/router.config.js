@@ -10,30 +10,23 @@ angular.module('clockworkproxy')
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.register', {
+    url: '/register',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'js/register/register.html',
+        controller: 'RegisterCtrl as $ctrl'
       }
     }
   })
 
-  .state('app.browse', {
-    url: '/browse',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/browse.html'
-      }
-    }
-  })
 
   .state('app.playlists', {
     url: '/playlists',
     views: {
       'menuContent': {
         templateUrl: 'templates/playlists.html',
-        controller: 'PlaylistsCtrl'
+        // controller: 'PlaylistsCtrl'
       }
     }
   })
@@ -43,10 +36,10 @@ angular.module('clockworkproxy')
     views: {
       'menuContent': {
         templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        // controller: 'PlaylistCtrl'
       }
     }
   });
 
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/register');
 });
