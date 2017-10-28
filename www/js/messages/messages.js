@@ -1,10 +1,9 @@
 angular.module('clockworkproxy')
 
 .controller('MessagesCtrl', function (MessagesService) {
-  console.log('MessagesCtrl here');
 
   MessagesService.getMessages().then(function (messages) {
-    // this.messages = messages;
+    window.msgs = messages;
   });
 
   this.messages = [{

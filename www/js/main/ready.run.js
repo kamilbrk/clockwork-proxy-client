@@ -8,6 +8,12 @@ angular.module('clockworkproxy')
     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     cordova.plugins.Keyboard.disableScroll(true);
   }
+
+  // Ignore device font size setting
+  if (window.MobileAccessibility) {
+    window.MobileAccessibility.usePreferredTextZoom(false);
+  }
+
   if (window.StatusBar) {
     // org.apache.cordova.statusbar required
     StatusBar.styleDefault();
