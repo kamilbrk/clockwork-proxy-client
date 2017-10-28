@@ -1,6 +1,6 @@
 {
   "name": "foolscode-hack17-client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An Ionic project",
   "devDependencies": {
     "gulp": "^3.5.6",
@@ -9,11 +9,14 @@
     "gulp-sass": "^3.1.0"
   },
   "dependencies": {
-    "cordova-sms-plugin": "^0.1.11"
+    "cordova-plugin-sms-receiver": "^0.1.6",
+    "cordova-sms-plugin": "^0.1.11",
+    "jsrsasign": "^8.0.4"
   },
   "cordova": {
     "plugins": {
-      "cordova-sms-plugin": {}
+      "cordova-sms-plugin": {},
+      "cordova-plugin-sms-receiver": {}
     }
   }
 }

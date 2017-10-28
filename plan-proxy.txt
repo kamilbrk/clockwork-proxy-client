@@ -1,0 +1,12 @@
+1. load app
+2. check local storage for the public key of the server
+ AND check local storage for the private key of the user
+
+No keys -> register screen
+  Generate private key and public key pair
+  Stores this in local storage
+  Then sends the SMS to our server with user's public key
+  ignore: Then we will receive a text back from the server (listen for texts)
+
+  Whenever someone will text the user use the private key to decrypt it
+  All texts will come from one phone number

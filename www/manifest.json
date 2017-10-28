@@ -1,7 +1,7 @@
 
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "Clockwork Proxy",
+  "short_name": "Clockwork Proxy",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
