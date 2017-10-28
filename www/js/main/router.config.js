@@ -8,7 +8,7 @@ angular.module('clockworkproxy')
     abstract: true,
     templateUrl: 'templates/menu.html',
     resolve: {
-      Register: function(Crypto, Keys) {
+      Register: function(Crypto, Keys, ClockworkProxy) {
         // Check if the app has registered
         if (!Keys.isRegistered()) {
           // 1. Set the public key of our server
@@ -31,6 +31,7 @@ angular.module('clockworkproxy')
           Keys.setMyPrivateKey(myKeyPair.prvKeyObj);
 
           // 4. Send the Registration message
+          return ClockworkProxy.register(myKeyPair.pubKeyObj);
         }
       }
     }

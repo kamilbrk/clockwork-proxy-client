@@ -1,7 +1,7 @@
 angular.module('clockworkproxy')
 .service('ClockworkProxy', function () {
 
-  this.register = function(recipient, message) {
+  this.register = function(message) {
     
   };
 
@@ -9,4 +9,8 @@ angular.module('clockworkproxy')
 
   };
 
+  this.getMessages = function() {
+
+  };
+  
 });
