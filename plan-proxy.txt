@@ -10,3 +10,14 @@ No keys -> register screen
 
   Whenever someone will text the user use the private key to decrypt it
   All texts will come from one phone number
+
+
+encrypted string:
+  recipient  = phone number
+  delimiter (new line i guess)
+  message
+
+this gets encrypted with private key
+then convert to utf7 string
+split into 160 chars each
+

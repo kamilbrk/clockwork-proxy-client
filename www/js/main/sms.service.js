@@ -1,70 +1,91 @@
 angular.module('clockworkproxy')
-.service('SMS', function () {
-
-  if (!window.cordova || !SmsReceiver || !sms) {
-    console.log('Got to be on cordova mate');
+.service('SmsService', function ($q) {
+  if (!window.cordova) {
+    console.log('This has to be on Cordova');
     return;
   }
 
-  var _hasPermission = false;
-  var _supported = false;
-  var _sendOptions = {
-    replaceLineBreaks: false,
-    android: {
-      intent: ''
-    }
-  };
+  var SERVICE_NUMBER = '+447860033362';
+  var permissions = cordova.plugins.permissions;
 
-  this.checkPermission = function () {
-    var success = function (hasPermission) {
-      _hasPermission = hasPermission;
-      console.log('SMS Permission', _hasPermission);
-    };
-    var error = function (e) {
-      console.log('Something went wrong:' + e);
-    };
+  this.send = function (message) {
+    if (!message) message = 'way she goes';
 
-    sms.hasPermission(success, error);
-  };
+    return this.checkPermission()
+      .then(function () {
+        var deferred = $q.defer();
 
-  this.checkSupport = function () {
-    SmsReceiver.isSupported(function (supported) {
-      _supported = supported;
-      console.log('SMS Support', _supported);
-    }, function (error) {
-      console.log('Error while checking the SMS support', error);
-    });
-  }
+        SMS.sendSMS(SERVICE_NUMBER, message, function (response) {
+          deferred.resolve(response);
+        }, deferred.reject);
 
-  this.send = function (number, message) {
-    if (!_hasPermission) return;
-
-    var success = function () {
-      console.log('Message sent successfully');
-    };
-    var error = function (e) {
-      console.log('Message not send due to error:' + e);
-    };
-
-    sms.send(number, message, _sendOptions, success, error);
+        return deferred.promise;
+      });
   };
 
   this.startReception = function () {
-    SmsReceiver.startReception(function (response) {
-      console.log('startReception response', response); // {messageBody, originatingAddress}
-    }, function (error) {
-      console.log('startReception error', error);
-    });
+    var deferred = $q.defer();
+
+    SMS.startWatch(function () {
+      document.addEventListener('onSMSArrive', _onSmsArrive);
+      deferred.resolve();
+    }, deferred.reject);
+
+    return deferred.promise;
   };
 
   this.stopReception = function () {
-    SmsReceiver.stopReception(function (response) {
-      console.log('StopReception: Correctly stopped')
-    }, function () {
-      console.log('StopReception: Error while stopping the SMS receiver')
-    });
+    var deferred = $q.defer();
+    document.removeEventListener('onSMSArrive', _onSmsArrive);
+    SMS.stopWatch(deferred.resolve, deferred.reject);
+    return deferred.promise;
   };
 
-  this.checkSupport();
-  this.checkPermission();
+  this.checkPermission = function () {
+    var deferred = $q.defer();
+
+    permissions.checkPermission(permissions.SEND_SMS, function (gotIt) {
+      if (gotIt) {
+        deferred.resolve();
+      } else {
+        deferred.reject('permission');
+      }
+    }, deferred.reject);
+
+    return deferred.promise;
+  }
+
+  this.getPermission = function () {
+    var deferred = $q.defer();
+
+    permissions.getPermission(permissions.SEND_SMS, function (accepted) {
+      if (accepted) {
+        deferred.resolve();
+      } else {
+        deferred.reject();
+      }
+    }, deferred.reject);
+  };
+
+  function _onSmsArrive (e) {
+    var data = e.data;
+    console.log('sms received', data);
+
+    /*
+    {
+      "address": "+447858308368",
+      "body": "HEY",
+      "date_sent": 1509212428000,
+      "date": 1509212429764,
+      "read": 0,
+      "seen": 0,
+      "status": 0,
+      "type": 1,
+      "service_center": "+447782000800"
+    }
+    */
+  }
+
+  this.getPermission();
+
 });
