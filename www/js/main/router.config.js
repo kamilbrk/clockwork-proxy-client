@@ -5,12 +5,8 @@ angular.module('clockworkproxy')
   .state('app', {
     url: '/app',
     abstract: true,
-    views: {
-      'main': {
-        templateUrl: 'js/app.html',
-        controller: 'AppCtrl as appCtrl',
-      }
-    },
+    templateUrl: 'js/app.html',
+    controller: 'AppCtrl as appCtrl',
     resolve: {
       Register: function(Crypto, Keys, ClockworkProxy) {
         // Check if the app has registered
@@ -48,11 +44,6 @@ angular.module('clockworkproxy')
         templateUrl: 'js/messages/messages.html',
         controller: 'MessagesCtrl as messagesCtrl'
       }
-    },
-    resolve: {
-      messages: function () {
-        return [];
-      }
     }
   })
   .state('app.messages.detail', {
@@ -62,18 +53,13 @@ angular.module('clockworkproxy')
         templateUrl: 'js/messages/detail/detail.html',
         controller: 'DetailCtrl as detailsCtrl'
       }
-    },
-    resolve: {
-      message: function (messages, $stateParams) {
-        return messages.find(function (x) { return x.id === $stateParams.id; });
-      }
     }
   })
   .state('app.create', {
     url: '/create',
     views: {
       'main': {
-        templateUrl: 'js/messages/create/create.html',
+        templateUrl: 'js/create/create.html',
         controller: 'CreateCtrl as createCtrl'
       }
     }

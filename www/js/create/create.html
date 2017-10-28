@@ -1,0 +1,17 @@
+<ion-view view-title="New message">
+  <ion-content>
+    <form name="createCtrl.form" class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Recipient</span>
+        <input type="text" placeholder="Recipient" ng-model="createCtrl.message.recipient">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Message</span>
+        <textarea rows="5" ng-model="createCtrl.message.body" placeholder="Message"></textarea>
+      </label>
+    </form>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-click="createCtrl.send()">Send message</button>
+    </div>
+  </ion-content>
+</ion-view>

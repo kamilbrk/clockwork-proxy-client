@@ -7,20 +7,39 @@ angular.module('clockworkproxy')
 
   var SERVICE_NUMBER = '+447860033362';
   var permissions = cordova.plugins.permissions;
+  var requiredPermissions = [
+    permissions.SEND_SMS
+  ];
 
   this.send = function (message) {
     if (!message) message = 'way she goes';
+    var deferred = $q.defer();
 
-    return this.checkPermission()
-      .then(function () {
-        var deferred = $q.defer();
+    SMS.sendSMS(SERVICE_NUMBER, message, function (response) {
+      deferred.resolve(response);
+    }, deferred.reject);
 
-        SMS.sendSMS(SERVICE_NUMBER, message, function (response) {
-          deferred.resolve(response);
-        }, deferred.reject);
+    return deferred.promise;
+  };
 
-        return deferred.promise;
-      });
+  this.list = function () {
+    var deferred = $q.defer();
+    var filter = {
+      // box : 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+
+      // following 4 filters should NOT be used together, they are OR relationship
+      // read : 0, // 0 for unread SMS, 1 for SMS already read
+      // _id : 1234, // specify the msg id
+      // address : '+8613601234567', // sender's phone number
+      // body : 'This is a test SMS', // content to match
+
+      // following 2 filters can be used to list page up/down
+      // indexFrom : 0, // start from index 0
+      // maxCount : 50, // count of SMS to return each time
+    };
+
+    SMS.listSMS(filter, deferred.resolve, deferred.reject);
+    return deferred.promise;
   };
 
   this.startReception = function () {
@@ -44,7 +63,7 @@ angular.module('clockworkproxy')
   this.checkPermission = function () {
     var deferred = $q.defer();
 
-    permissions.checkPermission(permissions.SEND_SMS, function (gotIt) {
+    permissions.checkPermission(requiredPermissions, function (gotIt) {
       if (gotIt) {
         deferred.resolve();
       } else {
@@ -58,7 +77,7 @@ angular.module('clockworkproxy')
   this.getPermission = function () {
     var deferred = $q.defer();
 
-    permissions.getPermission(permissions.SEND_SMS, function (accepted) {
+    permissions.requestPermission(requiredPermissions, function (accepted) {
       if (accepted) {
         deferred.resolve();
       } else {

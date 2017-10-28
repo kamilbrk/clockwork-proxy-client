@@ -1,13 +1,11 @@
 <ion-view view-title="Messages">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="message in messagesCtrl.messages">
-        <ion-avatar item-start>
-          <ion-icon name="contact"></ion-icon>
-        </ion-avatar>
+    <div class="list">
+      <a class="item item-avatar" ng-repeat="message in messagesCtrl.messages" ui-sref=".detail({ id: message.id })">
+        <ion-icon name="contact"></ion-icon>
         <h2 ng-bind="message.author"></h2>
         <p ng-bind="message.body"></p>
-      </ion-item>
-    </ion-list>
+      </a>
+    </div>
   </ion-content>
 </ion-view>
