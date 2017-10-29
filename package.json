@@ -11,6 +11,8 @@
   "dependencies": {
     "cordova-android": "6.3.0",
     "cordova-plugin-android-permissions": "^1.0.0",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-contacts": "^2.3.1",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
     "cordova-plugin-sms": "^1.0.5",
@@ -30,7 +32,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-sms": {},
       "cordova-plugin-android-permissions": {},
-      "phonegap-plugin-mobile-accessibility": {}
+      "phonegap-plugin-mobile-accessibility": {},
+      "cordova-plugin-contacts": {}
     },
     "platforms": [
       "android"

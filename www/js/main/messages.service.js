@@ -1,7 +1,9 @@
 angular.module('clockworkproxy')
 .service('MessagesService', function (SmsService, Keys) {
 
-  this.getMessages = function () {
+  var Service = {};
+
+  Service.getMessages = function () {
     var myPrivateKey = Keys.getMyPrivateKey();
 
     return SmsService.getTexts('')
@@ -48,4 +50,13 @@ angular.module('clockworkproxy')
       });
   };
 
+  Service.getMessage = function (id) {
+    return Service.getMessages().then(function (messages) {
+      return messages.find(function (message) {
+        return message.id === id;
+      });
+    });
+  };
+
+  return Service;
 });

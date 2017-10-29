@@ -1,0 +1,16 @@
+<ion-view view-title="Message">
+  <ion-content>
+
+    <div ng-if="!$ctrl.message">
+      <p>No message with this ID?</p>
+    </div>
+
+    <div class="card" ng-if="$ctrl.message">
+      <div class="item item-text-wrap">
+        <p ng-bind="$ctrl.message.body" ng-if="$ctrl.message.body"></p>
+        <p ng-if="!$ctrl.message.body">[Could not decrypt message. Is it not complete yet?]</p>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

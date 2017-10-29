@@ -50,27 +50,14 @@ angular.module('clockworkproxy')
         templateUrl: 'js/messages/messages.html',
         controller: 'MessagesCtrl as $ctrl'
       }
-    },
-    resolve: {
-      messages: function (MessagesService) {
-        return MessagesService.getMessages();
-      }
     }
   })
-  .state('app.messages.detail', {
-    url: '/:id',
+  .state('app.message', {
+    url: '/message/:id',
     views: {
-      'main@app': {
-        templateUrl: 'js/messages/detail/detail.html',
-        controller: 'DetailCtrl as $ctrl'
-      }
-    },
-    resolve: {
-      message: function (messages, $stateParams) {
-        console.log('msgs', messages);
-        return messages.find(function (item) {
-          return item.id === $stateParams.id;
-        });
+      'main': {
+        templateUrl: 'js/message/message.html',
+        controller: 'MessageCtrl as $ctrl'
       }
     }
   })
@@ -79,7 +66,7 @@ angular.module('clockworkproxy')
     views: {
       'main': {
         templateUrl: 'js/create/create.html',
-        controller: 'CreateCtrl as createCtrl'
+        controller: 'CreateCtrl as $ctrl'
       }
     }
   });

@@ -4,19 +4,20 @@
   </ion-nav-buttons>
   <ion-content>
 
-    <div ng-if="$ctrl.loading">
-      <p>Loading...</p>
-    </div>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="$ctrl.refresh()">
+    </ion-refresher>
 
-    <div class="list" ng-if="!$ctrl.loading && $ctrl.messages.length">
-      <a class="item item-avatar" ng-repeat="message in $ctrl.messages" ui-sref=".detail({ id: message.id })">
-        <ion-icon name="contact"></ion-icon>
-        <h2 ng-bind="message.from"></h2>
-        <p ng-bind="message.body"></p>
+    <div class="list" ng-if="$ctrl.messages.length">
+      <a class="item item-icon-left" ng-repeat="message in $ctrl.messages" ui-sref="app.message({ id: message.id })">
+        <i class="icon ion-document-text"></i>
+        <p ng-bind="message.body" ng-if="message.body"></p>
+        <p ng-if="!message.body">[Could not decrypt message. Is it not complete yet?]</p>
       </a>
     </div>
 
-    <div ng-if="!$ctrl.loading && !$ctrl.messages.length">
+    <div ng-if="!$ctrl.messages.length">
       <p>No encrypted messages here</p>
     </div>
 

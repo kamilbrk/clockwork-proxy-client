@@ -1,5 +1,5 @@
 angular.module('clockworkproxy')
-.service('SmsService', function ($q) {
+.service('SmsService', function ($q, $timeout) {
 
   if (!window.cordova) {
     console.log('This has to be on Cordova');
@@ -14,6 +14,12 @@ angular.module('clockworkproxy')
   this.send = function (message) {
     if (!message) message = 'way she goes';
     var deferred = $q.defer();
+
+    if (!window.cordova) {
+      return $timeout(function () {
+        return $q.when('OK');
+      }, 3000);
+    }
 
     SMS.sendSMS(SERVICE_NUMBER, message, function (response) {
       deferred.resolve(response);
@@ -107,11 +113,8 @@ angular.module('clockworkproxy')
   };
 
   function _onSmsArrive (e) {
-    var data = e.data;
-    console.log('sms received', data);
-
-    /*
-    {
+    var deferred = $q.defer();
+    /*{
       "address": "+447858308368",
       "body": "HEY",
       "date_sent": 1509212428000,
@@ -121,8 +124,16 @@ angular.module('clockworkproxy')
       "status": 0,
       "type": 1,
       "service_center": "+447782000800"
-    }
-    */
+    }*/
+    var data = {
+      from: e.data.address,
+      body: e.data.body,
+      date: e.data.date,
+      dateSent: e.data.date_sent
+    };
+    console.log('SMS received', data);
+    deferred.resolve(data);
+    return deferred.promise;
   }
 
   this.getPermission();
