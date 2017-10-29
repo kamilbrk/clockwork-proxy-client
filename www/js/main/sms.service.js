@@ -3,7 +3,6 @@ angular.module('clockworkproxy')
 
   if (!window.cordova) {
     console.log('This has to be on Cordova');
-    // return;
   }
 
   var SERVICE_NUMBER = '+447860033362';
@@ -23,35 +22,35 @@ angular.module('clockworkproxy')
     return deferred.promise;
   };
 
-  this.list = function () {
+  this.getTexts = function (folder) {
     var deferred = $q.defer();
+    folder = folder || 'inbox';
+
     var filter = {
-      box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+      box: folder, // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
 
       // following 4 filters should NOT be used together, they are OR relationship
-      // read : 0, // 0 for unread SMS, 1 for SMS already read
-      // _id : 1234, // specify the msg id
+      // read: 0, // 0 for unread SMS, 1 for SMS already read
+      // _id: 1234, // specify the msg id
       address: SERVICE_NUMBER, // sender's phone number
-      // body : 'This is a test SMS', // content to match
+      // body: 'This is a test SMS', // content to match
 
       // following 2 filters can be used to list page up/down
-      // indexFrom : 0, // start from index 0
+      // indexFrom: 0, // start from index 0
       maxCount: 500 // count of SMS to return each time
     };
 
     if (!window.cordova) {
+      // Four sample messages for running with `ionic serve` in a browser environment, where cordova and SMS plugins are not available
       deferred.resolve([
-        { body: "b108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-        { body: "a0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-        { body: "a108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-        { body: "x015631ee2eb436fd8ccea3cbcf887d0c27ef83d2deafdf8a880f366b381a9edaea5919772929a04024117b0c546d9ab856675d5dace80c82abb8a787761224ab970347bf35a" },
-
-        { body: "b0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-
-        { body: "c0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-        { body: "c108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-
-        { body: "x1fc35521ba8a03d9e1f80049d89cb5ad4b36bcd37966ba2d01adf07398df8cc612010c4375268498b1bcef1e10031ab7b77145e8bef1d0d0fd86c8e" }
+        { from: '', to: '', body: "b108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+        { from: '', to: '', body: "a0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+        { from: '', to: '', body: "a108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+        { from: '', to: '', body: "x015631ee2eb436fd8ccea3cbcf887d0c27ef83d2deafdf8a880f366b381a9edaea5919772929a04024117b0c546d9ab856675d5dace80c82abb8a787761224ab970347bf35a" },
+        { from: '', to: '', body: "b0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+        { from: '', to: '', body: "l0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
+        { from: '', to: '', body: "l108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
+        { from: '', to: '', body: "x1fc35521ba8a03d9e1f80049d89cb5ad4b36bcd37966ba2d01adf07398df8cc612010c4375268498b1bcef1e10031ab7b77145e8bef1d0d0fd86c8e" }
       ]);
     } else {
       SMS.listSMS(filter, deferred.resolve, deferred.reject);

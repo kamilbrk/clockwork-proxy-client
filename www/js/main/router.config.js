@@ -8,7 +8,7 @@ angular.module('clockworkproxy')
     templateUrl: 'js/app.html',
     controller: 'AppCtrl as appCtrl',
     resolve: {
-      Register: function(Crypto, Keys, ClockworkProxy) {
+      Register: function (Crypto, Keys, ClockworkProxy) {
         // Check if the app has registered
         if (!Keys.isRegistered()) {
           console.log('Not registered, registering.');
@@ -21,7 +21,7 @@ angular.module('clockworkproxy')
             'bjLl7K3+5s0BgV+grQ4LbrC4/1gE8fjj7i1NBIuIgrn4TcxuohNsRCzP/yp5CNg0' +
             'iX4KjfDYKyYK2g0fEQIDAQAB' +
             '-----END PUBLIC KEY-----'
-            ));
+          ));
 
           Keys.setServerPublicKey(serverPublicKey);
 
@@ -48,16 +48,29 @@ angular.module('clockworkproxy')
     views: {
       'main': {
         templateUrl: 'js/messages/messages.html',
-        controller: 'MessagesCtrl as messagesCtrl'
+        controller: 'MessagesCtrl as $ctrl'
+      }
+    },
+    resolve: {
+      messages: function (MessagesService) {
+        return MessagesService.getMessages();
       }
     }
   })
   .state('app.messages.detail', {
     url: '/:id',
     views: {
-      'main': {
+      'main@app': {
         templateUrl: 'js/messages/detail/detail.html',
-        controller: 'DetailCtrl as detailsCtrl'
+        controller: 'DetailCtrl as $ctrl'
+      }
+    },
+    resolve: {
+      message: function (messages, $stateParams) {
+        console.log('msgs', messages);
+        return messages.find(function (item) {
+          return item.id === $stateParams.id;
+        });
       }
     }
   })

@@ -7,10 +7,7 @@ angular.module('clockworkproxy')
 
   this.getServerPublicKey = function() {
     var key = store.get('server-public-key');
-
-    if (!key) {
-      return null;
-    }
+    if (!key) return null;
 
     return Crypto.getKeyFromPEM(key);
   };
@@ -21,10 +18,7 @@ angular.module('clockworkproxy')
 
   this.getMyPrivateKey = function () {
     var key = store.get('my-private-key');
-
-    if (!key) {
-      return null;
-    }
+    if (!key) return null;
 
     return Crypto.getKeyFromPEM(key);
   };
@@ -35,10 +29,7 @@ angular.module('clockworkproxy')
 
   this.getMyPublicKey = function () {
     var key = store.get('my-public-key');
-
-    if (!key) {
-      return null;
-    }
+    if (!key) return null;
 
     return Crypto.getKeyFromPEM(key);
   };

@@ -1,11 +1,24 @@
 <ion-view view-title="Messages">
+  <ion-nav-buttons side="right">
+    <a class="button" ui-sref="app.create">New</a>
+  </ion-nav-buttons>
   <ion-content>
-    <div class="list">
-      <a class="item item-avatar" ng-repeat="message in messagesCtrl.messages" ui-sref=".detail({ id: message.id })">
+
+    <div ng-if="$ctrl.loading">
+      <p>Loading...</p>
+    </div>
+
+    <div class="list" ng-if="!$ctrl.loading && $ctrl.messages.length">
+      <a class="item item-avatar" ng-repeat="message in $ctrl.messages" ui-sref=".detail({ id: message.id })">
         <ion-icon name="contact"></ion-icon>
-        <h2 ng-bind="message.author"></h2>
+        <h2 ng-bind="message.from"></h2>
         <p ng-bind="message.body"></p>
       </a>
     </div>
+
+    <div ng-if="!$ctrl.loading && !$ctrl.messages.length">
+      <p>No encrypted messages here</p>
+    </div>
+
   </ion-content>
 </ion-view>
