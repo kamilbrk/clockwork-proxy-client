@@ -1,7 +1,9 @@
-angular.module('clockworkproxy', ['ionic', 'angular-storage'])
+angular.module('clockworkproxy', ['ionic', 'ngMessages', 'angular-storage'])
 
 .controller('AppCtrl', function () {
-  console.log('AppCtrl here');
+  if (!window.cordova) {
+    console.log('Running without cordova, things may not work and you\'ll see some test data.');
+  }
 });
 
 angular.element(document).ready(function() {

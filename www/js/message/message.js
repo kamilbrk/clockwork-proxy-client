@@ -8,7 +8,7 @@ angular.module('clockworkproxy')
       template: 'Loading and decrypting message...'
     })
     .then(function () {
-      return MessagesService.getMessage($stateParams.id)
+      return MessagesService.getMessage($stateParams.id);
     })
     .then(function (message) {
       $ctrl.message = message;

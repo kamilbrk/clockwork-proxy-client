@@ -1,10 +1,5 @@
 angular.module('clockworkproxy')
-.service('SmsService', function ($q, $timeout) {
-
-  if (!window.cordova) {
-    console.log('This has to be on Cordova');
-  }
-
+.service('SmsService', function ($q, $timeout, Keys) {
   var SERVICE_NUMBER = '+447860033362';
   var permissions = window.cordova ? cordova.plugins.permissions : {};
   var requiredPermissions = [
@@ -29,6 +24,45 @@ angular.module('clockworkproxy')
   };
 
   this.getTexts = function (folder) {
+
+    if (!window.cordova) {
+      // Four sample messages for running with `ionic serve` in a browser environment, where cordova and SMS plugins are not available
+
+      // Random 4 characters. Range is different as it may contain 0-9, but we don't care that much here anyway.
+      var ids = Math.random().toString(36).substr(2, 4);
+      var sampleMessages = [ // Bacon Ipsum!
+        'Bacon ipsum dolor amet bacon tenderloin shankle, corned beef spare ribs meatloaf burgdoggen doner.',
+        'Ribeye turducken pastrami, capicola pancetta fatback kielbasa beef bresaola landjaeger corned beef.',
+        'Chicken meatloaf leberkas beef flank burgdoggen. Leberkas drumstick kielbasa pork loin, shankle salami.',
+        'Venison beef andouille flank fatback tri-tip jowl corned beef pork beef ribs t-bone tongue capicola.'
+      ];
+
+      var encryptedSampleMessages = [];
+      var myPublicKey = Keys.getMyPublicKey();
+
+      sampleMessages.forEach(function (sampleMessage, messageId) {
+        // 1. Encrypt the message
+        var encrypt = myPublicKey.encrypt(sampleMessage);
+
+        // 2. Split into 138 chars (we need two for message ID and order)
+        var split = encrypt.match(/.{1,138}/g);
+
+        // 3. Process each part
+        split.forEach(function (encrypted, order) {
+          // console.log('splt map', ids[messageId], order, encrypted);
+
+          // 4. Prefix each part with message ID and order
+          var withIdOrder = ids[messageId] + order + encrypted;
+          // console.log('prefixed', withIdOrder);
+
+          // 5. Output the finished part with the content just like the one in incoming text messages
+          encryptedSampleMessages.push({ body: withIdOrder });
+        });
+      });
+
+      return $q.resolve(encryptedSampleMessages);
+    }
+
     var deferred = $q.defer();
     folder = folder || 'inbox';
 
@@ -46,21 +80,7 @@ angular.module('clockworkproxy')
       maxCount: 500 // count of SMS to return each time
     };
 
-    if (!window.cordova) {
-      // Four sample messages for running with `ionic serve` in a browser environment, where cordova and SMS plugins are not available
-      deferred.resolve([
-        { from: '', to: '', body: "b108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-        { from: '', to: '', body: "a0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-        { from: '', to: '', body: "a108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-        { from: '', to: '', body: "x015631ee2eb436fd8ccea3cbcf887d0c27ef83d2deafdf8a880f366b381a9edaea5919772929a04024117b0c546d9ab856675d5dace80c82abb8a787761224ab970347bf35a" },
-        { from: '', to: '', body: "b0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-        { from: '', to: '', body: "l0441638beaf3b5abc4665717708ffb3c4956f2c36eba771b7fa58ef8ee6982dcba7e2ede2035890830e3847c1c6b7ef463693955c13e34cd0d26af0ee53df4132ccc0664252" },
-        { from: '', to: '', body: "l108727387d784abee3e986b43ae6af97ae83621cf94a102ed6267599edefcbefdfb461ea448cabbcc2bdc49fbd98d7af4309a21a4b10bc503e5a71f" },
-        { from: '', to: '', body: "x1fc35521ba8a03d9e1f80049d89cb5ad4b36bcd37966ba2d01adf07398df8cc612010c4375268498b1bcef1e10031ab7b77145e8bef1d0d0fd86c8e" }
-      ]);
-    } else {
-      SMS.listSMS(filter, deferred.resolve, deferred.reject);
-    }
+    SMS.listSMS(filter, deferred.resolve, deferred.reject);
 
     return deferred.promise;
   };

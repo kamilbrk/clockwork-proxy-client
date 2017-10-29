@@ -1,0 +1,21 @@
+<ion-view view-title="Preferences">
+  <ion-content>
+
+    <ul class="list">
+      <li class="item item-toggle" ng-repeat="(key, value) in $ctrl.preferences">
+        <span ng-bind="key"></span>
+        <label class="toggle toggle-positive">
+          <input type="checkbox" ng-model="$ctrl.preferences[key]" ng-change="$ctrl.save()">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+    </ul>
+
+    <div class="padding">
+      <button class="button button-block button-assertive" ng-click="$ctrl.reset()">Reset everything</button>
+    </div>
+
+  </ion-content>
+</ion-view>

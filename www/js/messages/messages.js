@@ -9,7 +9,7 @@ angular.module('clockworkproxy')
         template: 'Loading and decrypting messages...'
       })
       .then(function () {
-        return MessagesService.getMessages()
+        return MessagesService.getMessages();
       })
       .then(function (messages) {
         $ctrl.messages = messages;

@@ -11,7 +11,7 @@ angular.module('clockworkproxy')
         var result = [];
 
         // 1. Raw contents of the inbox (filtered by sender phone number in SmsService)
-        // console.log('Inbox (raw):', inbox);
+        // console.log('Inbox (raw):', rawInbox);
 
         // 2. Group all messages by the message ID (first character in each text message)
         var messageGroups = rawInbox.reduce(function (acc, item) {

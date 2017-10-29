@@ -5,14 +5,21 @@
 
       <label class="item item-input item-stacked-label">
         <span class="input-label">Recipient</span>
-        <!-- <button class="button button-small button-positive" ng-click="$ctrl.pick()">Select from contact list</button> -->
-        <input type="tel" placeholder="Recipient" ng-model="$ctrl.message.to" ng-pattern="/^\d{12}$/" required>
+        <button class="button button-small button-positive" ng-click="$ctrl.pick()" ng-if="$ctrl.useContacts">Select from contact list</button>
+        <input name="to" type="tel" placeholder="Recipient" ng-model="$ctrl.message.to" ng-pattern="/^\d{12}$/" required>
       </label>
+      <!-- <div class="padding" ng-messages="$ctrl.form.to.$error" ng-if="$ctrl.form.to.$error && $ctrl.form.to.$touched">
+        <div ng-message="required">Recipient is required</div>
+        <div ng-message="pattern">Phone number must be in format 440123456789, with area code, but without the + sign.</div>
+      </div> -->
 
       <label class="item item-input item-stacked-label">
         <span class="input-label">Message</span>
-        <textarea rows="5" ng-model="$ctrl.message.body" placeholder="Message" maxlength="101" required></textarea>
+        <textarea rows="5" name="body" ng-model="$ctrl.message.body" placeholder="Message" maxlength="101" required></textarea>
       </label>
+      <!-- <div class="padding" ng-messages="$ctrl.form.body.$error" ng-if="$ctrl.form.body.$error && $ctrl.form.body.$touched">
+        <div ng-message="required">Body is required</div>
+      </div> -->
 
     </form>
 

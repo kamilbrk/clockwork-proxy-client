@@ -1,10 +1,12 @@
 angular.module('clockworkproxy')
 
-.controller('CreateCtrl', function (ClockworkProxy, ContactsService, $scope, $timeout, $ionicPopover, $ionicHistory) {
+.controller('CreateCtrl', function (ClockworkProxy, ContactsService, PreferencesService, $scope, $timeout, $ionicPopover, $ionicHistory) {
   var $ctrl = this;
 
   var template = '<ion-popover-view><ion-content>Message sent!</ion-content></ion-popover-view>';
   var popover = $ionicPopover.fromTemplate(template);
+
+  $ctrl.useContacts = PreferencesService.get('useContacts');
 
   $ctrl.message = {
     to: '',
@@ -16,8 +18,8 @@ angular.module('clockworkproxy')
       .then(function (contact) {
         var numbers = contact.phoneNumbers;
         if (numbers.length) {
-          var number = contact.phoneNumbers[0];
-          if (number[0] === '+') number = number.slice(1);
+          var number = contact.phoneNumbers[0].value;
+          if (number[0] === '+') number = +number.slice(1);
           $ctrl.message.to = number;
         }
       }, function (error) {
